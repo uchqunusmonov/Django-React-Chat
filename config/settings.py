@@ -83,7 +83,7 @@ SIMPLE_JWT = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleWare',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -113,7 +113,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-CORS_ALLOW_HEADERS = {
+CORS_ALLOW_HEADERS = (
     'x-requested-with',
     'content-type',
     'accept',
@@ -123,7 +123,7 @@ CORS_ALLOW_HEADERS = {
     'x-csrftoken',
     'acces-control-allow-origin',
     'content-disposition',
-}
+)
 
 CORS_ALLOW_CREDENTAILS = False
 CORS_ALLOW_METHODS = ('GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS')
@@ -142,6 +142,12 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

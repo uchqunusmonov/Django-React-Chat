@@ -19,7 +19,10 @@ def handleRequest(serializerData):
     headers = {
         'Content-Type': 'application/json',
     }
-    requests.post(SOCKET_SERVER, json.dumps(notification), headers=headers)
+    try:
+        requests.post(SOCKET_SERVER, json.dumps(notification), headers=headers)
+    except Exception as e:
+        pass
     return True
 
 
@@ -61,8 +64,10 @@ class MessageView(ModelViewSet):
             message_data = self.get_queryset().get(id=serializer.data['id'])
             return Response(self.serializer_class(message_data).data, status=status.HTTP_201_CREATED)
         
-
-        handleRequest(serializer)
+        try:
+            handleRequest(serializer)
+        except:
+            pass
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -83,7 +88,10 @@ class MessageView(ModelViewSet):
             MessageAttachment.objects.bulk_create([MessageAttachment(**attachment, message_id=instance.id) for attachment in attachments])
             message_data = self.get_object()
             return Response(self.serializer_class(message_data).data, status=status.HTTP_200_OK)
-        handleRequest(serializer)
+        try:
+            handleRequest(serializer)
+        except:
+            pass
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
