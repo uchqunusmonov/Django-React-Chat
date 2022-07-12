@@ -192,4 +192,4 @@ DEFAULT_FILE_STORAGE = 'config.storage_backends.PublicMediaStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-SOCKET_SERVER = 'http://127.0.0.1:8001/server'
+SOCKET_SERVER = 'http://127.0.0.1:9000/server'
