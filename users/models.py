@@ -1,3 +1,4 @@
+import django
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from message.models import GenericFileUpload
@@ -36,6 +37,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    is_online = models.DateTimeField(default=django.utils.timezone.now)
 
     USERNAME_FIELD = 'email'
     objects = CustomUserManager()
@@ -43,13 +45,16 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
+    class Meta:
+        ordering = ['-created_date',]
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(CustomUser, related_name='user_profile', on_delete=models.CASCADE)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     caption = models.CharField(max_length=255)
-    profile_picture = models.ForeignKey(GenericFileUpload, related_name="user_image", on_delete=models.CASCADE, null=True)
+    profile_picture = models.ForeignKey(GenericFileUpload, related_name="user_image", on_delete=models.CASCADE, null=True, blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
